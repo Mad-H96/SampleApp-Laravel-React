@@ -1,3 +1,7 @@
+import { BrowserRouter } from "react-router-dom"
+import AppRouter from "./config/Router"
+import "./App.css"
+
 
 
 function App() {
@@ -5,7 +9,11 @@ function App() {
 
   return (
     <>
-    <h1>d</h1>
+<BrowserRouter>
+    <AppRouter/>
+</BrowserRouter>
+
+
     </>
   )
 }
