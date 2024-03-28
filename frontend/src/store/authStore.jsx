@@ -1,6 +1,12 @@
 import { action, makeObservable, observable } from "mobx";
+import { Navigate } from "react-router-dom";
+
+function refreshPage() {
+    window.location.reload(false);
+}
 
 export default class AuthStore {
+
     constructor(rootStore) {
 
         this.BASE_URL = 'http://localhost:8000/api/auth';
@@ -37,6 +43,9 @@ export default class AuthStore {
         this.token = value;
     }
 
+
+    
+
     login = async (postData) => {
         try {
             const response = await fetch(this.BASE_URL + '/login', {
@@ -48,6 +57,7 @@ export default class AuthStore {
             });
 
             const data = await response.json();
+          
             if (data.error) {
                 this.rootStore.handleError(response.status, data.message, data);
                 return Promise.reject(data);
@@ -61,7 +71,33 @@ export default class AuthStore {
         }
     };
 
-    logout() {
-        // Implementation for logout action
+
+
+    logout = async () => {
+        try{
+            const response = await fetch(this.BASE_URL + '/logout', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${this.token}`,
+                  'Content-Type': 'application/json',
+                }
+              })
+
+              const data = await response.json();
+              refreshPage();
+              if (data.error) {
+                this.rootStore.handleError(response.status, data.message, data);
+                return Promise.reject(data)
+              
+              } else {
+                this.setIsAuthenticated(false)
+                return Promise.resolve(data)
+               
+              }
+        }catch(error){
+            this.rootStore.handleError(419, "Something goes wrong", error)
+        }
     }
+
+    
 }

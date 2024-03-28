@@ -34,7 +34,7 @@ const Login = () => {
   const isAuthenticated = authStore.isAuthenticated;
  
   if (isAuthenticated) {
-    return <Navigate to="/customers" />;
+    return <Navigate to="/dashboard/customers" />;
   }
 
 

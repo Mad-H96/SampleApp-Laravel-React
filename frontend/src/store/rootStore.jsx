@@ -3,6 +3,13 @@ import AuthStore from "./authStore";
 import { useContext } from "react";
 
 
+// if (process.env.NODE_ENV === "development") {
+//     import('mobx-logger').then(({ enableLogging }) => {
+//         enableLogging();
+//     });
+// }
+
+
 export class RootStore {
     constructor() {
         console.log("RootStore");
